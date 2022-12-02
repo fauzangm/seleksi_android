@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">seleksiandroid</string>
+    <string name="home_people">People</string>
+    <string name="home_film">Film</string>
+    <string name="home_planet">Planet</string>
+    <string name="home_species">Species</string>
+    <string name="home_vehicles">Vehicles</string>
+</resources>
