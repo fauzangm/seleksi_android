@@ -27,26 +27,39 @@ class GetSpeciesRepository @Inject constructor(
     private val error = MutableLiveData<String>()
     private val loading = MutableLiveData<Boolean>()
     private val regItem = MutableLiveData<GetSpeciesResponse>()
-    private var id  = 0
+    val speciesVoItem = MutableLiveData<List<SpeciesVo>>()
+    private var id = 0
 
-    suspend fun geteSPecies() : GetSpeciesResult {
-        return withContext(ioDispatcher){
+
+    suspend fun getItemSpecies() {
+        withContext(ioDispatcher) {
+            val result = speciesDao.getSpecies()
+            result.let {
+                speciesVoItem.postValue(it)
+            }
+        }
+    }
+
+    suspend fun geteSPecies(): GetSpeciesResult {
+        return withContext(ioDispatcher) {
             loading.postValue(true)
             try {
+                val check = speciesDao.getSpecies()
                 val getResponse = apiServices.getSpecies()
-                if (getResponse.isSuccessful){
-                    getResponse.body()?.let {
-                        it.results?.forEach { data->
-                            saveSpecies(it.results)
+                if (check.isEmpty()) {
+                    if (getResponse.isSuccessful) {
+                        getResponse.body()?.let {
+                            it.results?.forEach { data ->
+                                saveSpecies(it.results)
+                            }
+                            regItem.postValue(it)
                         }
-                        regItem.postValue(it)
+                    } else {
+                        error.postValue(getResponse.errorBody()?.string().toString())
                     }
-                } else{
-                    error.postValue(getResponse.errorBody()?.string().toString())
+                    loading.postValue(false)
                 }
-                loading.postValue(false)
-
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 loading.postValue(false)
                 e.printStackTrace()
                 error.postValue(e.localizedMessage)
@@ -57,13 +70,13 @@ class GetSpeciesRepository @Inject constructor(
     }
 
     private suspend fun saveSpecies(data: List<ResultsSpeciesItem>) {
-        if (data.isNotEmpty()){
+        if (data.isNotEmpty()) {
             val speciesItem: ArrayList<SpeciesVo> = arrayListOf()
             data.forEach { listItem ->
                 id++
                 speciesItem.add(
                     SpeciesVo(
-                        id = id-90,
+                        id = id - 90,
                         name = listItem.name!!
                     )
                 )

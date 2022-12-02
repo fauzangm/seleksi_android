@@ -13,7 +13,8 @@ class DataCache @Inject constructor(
         private const val PREF_NAME = "dataSmarGoat"
         private const val DATA_CACHE = "dataSmartGoat"
         private const val DATA_CACHESWITCH = "dataSwitchSmartGoat"
-        val IDKAMBING = ""
+        val INTERRUPT = ""
+        val ID = ""
     }
 
     private var pref: SharedPreferences
@@ -25,20 +26,6 @@ class DataCache @Inject constructor(
         editor = pref.edit()
         editor.apply()
     }
-
-//    var dataTimbangan: FormatDataTimbangan?
-//        set(value) = pref.edit().putString(DATA_CACHE, Gson().toJson(value)).apply()
-//        get() {
-//            val data: String? = pref.getString(DATA_CACHE, null)
-//            return if(data.isNullOrBlank()){ null } else { Gson().fromJson(data, FormatDataTimbangan::class.java) }
-//        }
-//
-//    var dataSwitch: FormatDataSwitch?
-//        set(value) = pref.edit().putString(DATA_CACHESWITCH, Gson().toJson(value)).apply()
-//        get() {
-//            val data: String? = pref.getString(DATA_CACHESWITCH, null)
-//            return if(data.isNullOrBlank()){ null } else { Gson().fromJson(data, FormatDataSwitch::class.java) }
-//        }
 
 
     fun put(key: String, value: String) {

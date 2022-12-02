@@ -6,6 +6,7 @@ import com.eduside.bappenda.di.IoDispatcher
 import com.eduside.seleksiandroid.data.local.db.dao.PeopleDao
 import com.eduside.seleksiandroid.data.local.db.dao.ShipDao
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
+import com.eduside.seleksiandroid.data.local.db.entities.PlanetVo
 import com.eduside.seleksiandroid.data.local.db.entities.ShipVo
 import com.eduside.seleksiandroid.data.local.db.entities.SpeciesVo
 import com.eduside.seleksiandroid.data.remote.ApiServices
@@ -26,25 +27,37 @@ class GetStartshipRepository @Inject constructor(
     private val error = MutableLiveData<String>()
     private val loading = MutableLiveData<Boolean>()
     private val regItem = MutableLiveData<GetStartshipsResponse>()
+    val shipVoItem = MutableLiveData<List<ShipVo>>()
     private var id = 0
+
+    suspend fun getItemShip(){
+        withContext(ioDispatcher){
+            val result = shipDao.getShip()
+            result.let {
+                shipVoItem.postValue(it)
+            }
+        }
+    }
 
     suspend fun getStartship() : GetStartshipResult {
         return withContext(ioDispatcher){
             loading.postValue(true)
             try {
+                val check = shipDao.getShip()
                 val getResponse = apiServices.getStartship()
-                if (getResponse.isSuccessful){
-                    getResponse.body()?.let {
-                        it.results?.forEach {data->
-                            saveShip(it.results)
+                if (check.isEmpty()) {
+                    if (getResponse.isSuccessful) {
+                        getResponse.body()?.let {
+                            it.results?.forEach { data ->
+                                saveShip(it.results)
+                            }
+                            regItem.postValue(it)
                         }
-                        regItem.postValue(it)
+                    } else {
+                        error.postValue(getResponse.errorBody()?.string().toString())
                     }
-                } else{
-                    error.postValue(getResponse.errorBody()?.string().toString())
+                    loading.postValue(false)
                 }
-                loading.postValue(false)
-
             }catch (e: Exception){
                 loading.postValue(false)
                 e.printStackTrace()

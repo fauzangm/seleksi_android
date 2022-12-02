@@ -1,7 +1,10 @@
 package com.eduside.seleksiandroid.data.repository.people
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.observe
 import com.eduside.bappenda.di.IoDispatcher
 import com.eduside.seleksiandroid.data.local.db.dao.PeopleDao
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
@@ -22,28 +25,39 @@ class GetPeopleRepository @Inject constructor(
     private val error = MutableLiveData<String>()
     private val loading = MutableLiveData<Boolean>()
     private val regItem = MutableLiveData<GetPeopleResponse>()
-    private var id =0
+    val itemPeople = MutableLiveData<List<PeopleVo>>()
+    private var id = 0
 
-    fun getPeople(): LiveData<List<PeopleVo>> = peopleDao.getPeople()
+    suspend fun getPeople() {
+        withContext(ioDispatcher) {
+            val result = peopleDao.getPeople()
+            result.let {
+                itemPeople.postValue(it)
+            }
+        }
+    }
 
-    suspend fun getPeopleItem() : GetPeopleResult {
-        return withContext(ioDispatcher){
+    suspend fun getPeopleItem(): GetPeopleResult {
+        return withContext(ioDispatcher) {
             loading.postValue(true)
             try {
-                val getResponse = apiServices.getPeople()
-                if (getResponse.isSuccessful){
-                    getResponse.body()?.let {
-                        it.results?.forEach { data->
-                            saveGetItem(it.results)
+                val check = peopleDao.getPeople()
+                if (check.isEmpty()) {
+                    val getResponse = apiServices.getPeople()
+                    if (getResponse.isSuccessful) {
+                        getResponse.body()?.let {
+                            it.results?.forEach { data ->
+                                saveGetItem(it.results)
+                            }
+                            regItem.postValue(it)
                         }
-                        regItem.postValue(it)
+                    } else {
+                        error.postValue(getResponse.errorBody()?.string().toString())
                     }
-                } else{
-                    error.postValue(getResponse.errorBody()?.string().toString())
                 }
                 loading.postValue(false)
 
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 loading.postValue(false)
                 e.printStackTrace()
                 error.postValue(e.localizedMessage)
@@ -54,13 +68,13 @@ class GetPeopleRepository @Inject constructor(
     }
 
     private suspend fun saveGetItem(data: List<ResultsPeopleItem>) {
-        if (data.isNotEmpty()){
+        if (data.isNotEmpty()) {
             val peopleItem: ArrayList<PeopleVo> = arrayListOf()
             data.forEach { listItem ->
                 id++
                 peopleItem.add(
                     PeopleVo(
-                        id = id-90,
+                        id = id - 90,
                         name = listItem.name!!,
                         mass = listItem.mass,
                         hair_color = listItem.hairColor,

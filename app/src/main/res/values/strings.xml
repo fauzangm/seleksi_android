@@ -5,4 +5,5 @@
     <string name="home_planet">Planet</string>
     <string name="home_species">Species</string>
     <string name="home_vehicles">Vehicles</string>
+    <string name="tanda">:</string>
 </resources>

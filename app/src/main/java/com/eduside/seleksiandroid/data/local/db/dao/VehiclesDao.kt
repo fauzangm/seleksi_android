@@ -20,6 +20,6 @@ interface VehiclesDao {
 
     //get
     @Query("SELECT * FROM list_vehicles ORDER BY id ASC")
-    fun getVehicles(): LiveData<List<VehiclesVo>>
+    suspend fun getVehicles(): List<VehiclesVo>
 
 }

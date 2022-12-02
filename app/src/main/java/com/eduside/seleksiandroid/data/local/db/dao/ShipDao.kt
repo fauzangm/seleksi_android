@@ -22,6 +22,6 @@ interface ShipDao {
 
     //get
     @Query("SELECT * FROM list_ship ORDER BY id ASC")
-    fun getShip(): LiveData<List<ShipVo>>
+    suspend fun getShip(): List<ShipVo>
 
 }

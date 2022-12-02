@@ -22,6 +22,6 @@ interface PlanetDao {
 
     //get
     @Query("SELECT * FROM list_planet ORDER BY id ASC")
-    fun getPlanet(): LiveData<List<PlanetVo>>
+    suspend fun getPlanet(): List<PlanetVo>
 
 }

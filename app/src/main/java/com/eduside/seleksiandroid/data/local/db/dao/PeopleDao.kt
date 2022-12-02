@@ -20,6 +20,6 @@ interface PeopleDao {
 
     //get
     @Query("SELECT * FROM list_people ORDER BY id ASC")
-    fun getPeople(): LiveData<List<PeopleVo>>
+    suspend fun getPeople(): List<PeopleVo>
 
 }

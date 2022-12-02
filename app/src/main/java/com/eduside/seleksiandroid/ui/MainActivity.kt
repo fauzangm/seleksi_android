@@ -79,8 +79,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewmodel.getShipError.observe(this) {
-            val bottomSheetFragment = DialogGagalGet()
-            bottomSheetFragment.show(supportFragmentManager, "DialogGagal")
 
         }
         viewmodel.getShipLoading.observe(this) {
@@ -89,8 +87,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewmodel.getVehicleError.observe(this) {
-            val bottomSheetFragment = DialogGagalGet()
-            bottomSheetFragment.show(supportFragmentManager, "DialogGagal")
 
         }
         viewmodel.getVehicleLoading.observe(this) {

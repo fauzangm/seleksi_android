@@ -23,6 +23,6 @@ interface SpeciesDao {
 
     //get
     @Query("SELECT * FROM list_species ORDER BY id ASC")
-    fun getSpecies(): LiveData<List<SpeciesVo>>
+    suspend fun getSpecies(): List<SpeciesVo>
 
 }

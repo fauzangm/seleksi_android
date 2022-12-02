@@ -1,17 +1,17 @@
-package com.eduside.seleksiandroid.ui
+package com.eduside.seleksiandroid.ui.listItem
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.eduside.seleksiandroid.data.local.db.entities.FilmVo
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
-import com.eduside.seleksiandroid.data.remote.response.people.ResultsPeopleItem
 import com.eduside.seleksiandroid.databinding.ItemListPeopleItemBinding
 import javax.inject.Inject
 
-class ListPeopleAdapter @Inject constructor() :
-    ListAdapter<PeopleVo, ListPeopleAdapter.ViewHolder>(ListDiffUtill()) {
+class ListFilmAdapter @Inject constructor() :
+    ListAdapter<FilmVo, ListFilmAdapter.ViewHolder>(ListDiffUtill()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -38,12 +38,12 @@ class ListPeopleAdapter @Inject constructor() :
         var binding: ItemListPeopleItemBinding = itemBinding
     }
 
-    class ListDiffUtill : DiffUtil.ItemCallback<PeopleVo>() {
-        override fun areItemsTheSame(oldItem: PeopleVo, newItem: PeopleVo): Boolean {
+    class ListDiffUtill : DiffUtil.ItemCallback<FilmVo>() {
+        override fun areItemsTheSame(oldItem: FilmVo, newItem: FilmVo): Boolean {
             return newItem.id== oldItem.id
         }
 
-        override fun areContentsTheSame(oldItem: PeopleVo, newItem: PeopleVo): Boolean {
+        override fun areContentsTheSame(oldItem: FilmVo, newItem: FilmVo): Boolean {
             return areItemsTheSame(oldItem, newItem)
         }
     }

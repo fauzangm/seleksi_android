@@ -1,5 +1,6 @@
 package com.eduside.seleksiandroid.data.repository.planet
 
+import android.media.Image.Plane
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eduside.bappenda.di.IoDispatcher
@@ -28,26 +29,39 @@ class GetPlanetRepository @Inject constructor(
     private val error = MutableLiveData<String>()
     private val loading = MutableLiveData<Boolean>()
     private val regItem = MutableLiveData<GetPlanetsResponse>()
+    val planetVoItem = MutableLiveData<List<PlanetVo>>()
     private var id = 0
 
-    suspend fun getPlanet() : GetPlanetResult {
-        return withContext(ioDispatcher){
+    suspend fun getItemPlanet() {
+        withContext(ioDispatcher) {
+            val result = planetDao.getPlanet()
+            result.let {
+                planetVoItem.postValue(it)
+            }
+        }
+    }
+
+    suspend fun getPlanet(): GetPlanetResult {
+        return withContext(ioDispatcher) {
             loading.postValue(true)
             try {
-                val getResponse = apiServices.getPlanet()
-                if (getResponse.isSuccessful){
-                    getResponse.body()?.let {
-                        it.results?.forEach { data->
-                            savePLanet(it.results)
+                val check = planetDao.getPlanet()
+                if (check.isEmpty()) {
+                    val getResponse = apiServices.getPlanet()
+                    if (getResponse.isSuccessful) {
+                        getResponse.body()?.let {
+                            it.results?.forEach { data ->
+                                savePLanet(it.results)
+                            }
+                            regItem.postValue(it)
                         }
-                        regItem.postValue(it)
+                    } else {
+                        error.postValue(getResponse.errorBody()?.string().toString())
                     }
-                } else{
-                    error.postValue(getResponse.errorBody()?.string().toString())
                 }
                 loading.postValue(false)
 
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 loading.postValue(false)
                 e.printStackTrace()
                 error.postValue(e.localizedMessage)
@@ -58,13 +72,13 @@ class GetPlanetRepository @Inject constructor(
     }
 
     private suspend fun savePLanet(data: List<ResultsPlanetItem>) {
-        if (data.isNotEmpty()){
+        if (data.isNotEmpty()) {
             val planetItem: ArrayList<PlanetVo> = arrayListOf()
             data.forEach { listItem ->
                 id++
                 planetItem.add(
                     PlanetVo(
-                        id = id-90,
+                        id = id - 90,
                         name = listItem.name!!
                     )
                 )

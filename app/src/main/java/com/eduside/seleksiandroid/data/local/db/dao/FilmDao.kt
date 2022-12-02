@@ -19,8 +19,13 @@ interface FilmDao {
     @Delete
     suspend fun deletFilm(item: FilmVo)
 
+
+    //deleteALL
+    @Query("DELETE FROM list_film")
+    suspend fun deletAll()
+
     //get
     @Query("SELECT * FROM list_film ORDER BY id ASC")
-    fun getFIlm(): LiveData<List<FilmVo>>
+    suspend fun getFIlm(): List<FilmVo>
 
 }

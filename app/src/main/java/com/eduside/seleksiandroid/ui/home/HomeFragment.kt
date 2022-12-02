@@ -1,4 +1,4 @@
-package com.eduside.seleksiandroid.ui
+package com.eduside.seleksiandroid.ui.home
 
 import android.app.Activity
 import android.content.Intent
@@ -11,14 +11,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.eduside.seleksiandroid.R
+import com.eduside.seleksiandroid.data.local.sp.DataCache
 import com.eduside.seleksiandroid.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    @Inject lateinit var dataCache: DataCache
 //    private val viewModel : FormPendataanViewModel by viewModels ()
 //    @Inject lateinit var adapter: FormPendataanDetailPajakAdapter
 
@@ -51,8 +54,30 @@ class HomeFragment : Fragment() {
 //            view?.findNavController()?.navigate(R.id.action_navigation_pendataan_detail_objek_to_navigation_pendataan_objek_pajak)
 //        }
         binding.btnPeople.setOnClickListener {
+            dataCache.put(DataCache.INTERRUPT,"1")
             view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
         }
+        binding.btnFilm.setOnClickListener {
+            dataCache.put(DataCache.INTERRUPT,"2")
+            view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
+        }
+        binding.btnPlanet.setOnClickListener {
+            dataCache.put(DataCache.INTERRUPT,"3")
+            view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
+        }
+        binding.btnSpecies.setOnClickListener {
+            dataCache.put(DataCache.INTERRUPT,"4")
+            view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
+        }
+        binding.btnVehicle.setOnClickListener {
+            dataCache.put(DataCache.INTERRUPT,"5")
+            view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
+        }
+        binding.btnShip.setOnClickListener {
+            dataCache.put(DataCache.INTERRUPT,"6")
+            view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
+        }
+
 //
 //
 //        binding.btnKlasifikasi.setOnClickListener{

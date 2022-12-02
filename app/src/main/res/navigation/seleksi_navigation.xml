@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.eduside.seleksiandroid.ui.HomeFragment"
+        android:name="com.eduside.seleksiandroid.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_list"
@@ -19,13 +19,43 @@
 
     <fragment
         android:id="@+id/navigation_list"
-        android:name="com.eduside.seleksiandroid.ui.ListItemFragment"
+        android:name="com.eduside.seleksiandroid.ui.listItem.ListItemFragment"
         tools:layout="@layout/fragment_list_item">
         <action
             android:id="@+id/action_navigation_list_to_navigation_home"
             app:destination="@id/navigation_home"
+            app:popUpTo="@+id/navigation_home"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/from_right" />
+        <action
+            android:id="@+id/action_navigation_list_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/from_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.eduside.seleksiandroid.ui.detailItem.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <action
+            android:id="@+id/action_detailFragment_to_navigation_list"
+            app:destination="@id/navigation_list"
+            app:popUpTo="@+id/navigation_list"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/from_right"/>
+        <action
+            android:id="@+id/action_detailFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@+id/navigation_home"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/from_right"/>
     </fragment>
 
 </navigation>

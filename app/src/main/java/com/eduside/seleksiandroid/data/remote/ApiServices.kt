@@ -32,4 +32,9 @@ interface ApiServices {
     suspend fun getStartship(
     ):Response<GetStartshipsResponse>
 
+    @GET("people/{id}")
+    suspend fun getDetailPeople(
+        @Path("id")id:Int
+    ):Response<GetPeopleResponse>
+
 }

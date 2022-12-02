@@ -6,6 +6,7 @@ import com.eduside.bappenda.di.IoDispatcher
 import com.eduside.seleksiandroid.data.local.db.dao.PeopleDao
 import com.eduside.seleksiandroid.data.local.db.dao.VehiclesDao
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
+import com.eduside.seleksiandroid.data.local.db.entities.PlanetVo
 import com.eduside.seleksiandroid.data.local.db.entities.ShipVo
 import com.eduside.seleksiandroid.data.local.db.entities.VehiclesVo
 import com.eduside.seleksiandroid.data.remote.ApiServices
@@ -29,25 +30,41 @@ class GetVehicleRepository @Inject constructor(
     private val error = MutableLiveData<String>()
     private val loading = MutableLiveData<Boolean>()
     private val regItem = MutableLiveData<GetVehiclesResponse>()
+    val vehicleItemVo = MutableLiveData<List<VehiclesVo>>()
     private var id = 0
-    suspend fun getVehicle() : GetVehicleResult {
-        return withContext(ioDispatcher){
+
+    suspend fun getItemVehicle() {
+        withContext(ioDispatcher) {
+            val result = vehiclesDao.getVehicles()
+            result.let {
+                vehicleItemVo.postValue(it)
+            }
+        }
+    }
+
+    suspend fun getVehicle(): GetVehicleResult {
+        return withContext(ioDispatcher) {
             loading.postValue(true)
             try {
+                val check = vehiclesDao.getVehicles()
                 val getResponse = apiServices.getVehicles()
-                if (getResponse.isSuccessful){
-                    getResponse.body()?.let {
-                        it.results?.forEach { data->
-                            saveVehicles(it.results)
+                if (check.isEmpty()) {
+
+
+                    if (getResponse.isSuccessful) {
+                        getResponse.body()?.let {
+                            it.results?.forEach { data ->
+                                saveVehicles(it.results)
+                            }
+                            regItem.postValue(it)
                         }
-                        regItem.postValue(it)
+                    } else {
+                        error.postValue(getResponse.errorBody()?.string().toString())
                     }
-                } else{
-                    error.postValue(getResponse.errorBody()?.string().toString())
                 }
                 loading.postValue(false)
 
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 loading.postValue(false)
                 e.printStackTrace()
                 error.postValue(e.localizedMessage)
@@ -58,13 +75,13 @@ class GetVehicleRepository @Inject constructor(
     }
 
     private suspend fun saveVehicles(data: List<ResultsVehiclesItem>) {
-        if (data.isNotEmpty()){
+        if (data.isNotEmpty()) {
             val vehiclesItem: ArrayList<VehiclesVo> = arrayListOf()
             data.forEach { listItem ->
                 id++
                 vehiclesItem.add(
                     VehiclesVo(
-                        id = id-90,
+                        id = id - 90,
                         name = listItem.name!!
                     )
                 )

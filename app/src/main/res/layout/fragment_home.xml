@@ -145,6 +145,7 @@
         android:layout_marginStart="20dp">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_species"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@drawable/bg_btn_primary_rounded"
@@ -174,6 +175,7 @@
         android:layout_marginStart="20dp">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_vehicle"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@drawable/bg_btn_primary_rounded"
@@ -204,6 +206,7 @@
         android:layout_marginStart="20dp">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ship"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@drawable/bg_btn_primary_rounded"

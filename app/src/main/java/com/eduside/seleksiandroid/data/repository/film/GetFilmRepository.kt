@@ -1,5 +1,6 @@
 package com.eduside.seleksiandroid.data.repository.film
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eduside.bappenda.di.IoDispatcher
@@ -26,28 +27,47 @@ class GetFilmRepository @Inject constructor(
     private val error = MutableLiveData<String>()
     private val loading = MutableLiveData<Boolean>()
     private val regItem = MutableLiveData<GetFilmResponse>()
+    val filmVoItem = MutableLiveData<List<FilmVo>>()
     private var id = 0
 
-    fun getFilm(): LiveData<List<FilmVo>> = filmDao.getFIlm()
 
-    suspend fun getFilmItem() : GetFilmResult {
-        return withContext(ioDispatcher){
+    suspend fun getFilm() {
+        withContext(ioDispatcher) {
+            val result = filmDao.getFIlm()
+            result.let {
+                filmVoItem.postValue(it)
+            }
+        }
+    }
+
+    suspend fun clearFilm() {
+        withContext(ioDispatcher) {
+            filmDao.deletAll()
+        }
+    }
+
+    suspend fun getFilmItem(): GetFilmResult {
+        return withContext(ioDispatcher) {
             loading.postValue(true)
             try {
-                val getResponse = apiServices.getFilms()
-                if (getResponse.isSuccessful){
-                    getResponse.body()?.let {
-                        it.results?.forEach { data ->
-                            saveFilm(it.results)
+                val check = filmDao.getFIlm()
+                if (check.isEmpty()) {
+                    val getResponse = apiServices.getFilms()
+                    if (getResponse.isSuccessful) {
+                        getResponse.body()?.let {
+                            it.results?.forEach { data ->
+                                saveFilm(it.results)
+                            }
+                            regItem.postValue(it)
                         }
-                        regItem.postValue(it)
+                    } else {
+                        error.postValue(getResponse.errorBody()?.string().toString())
                     }
-                } else{
-                    error.postValue(getResponse.errorBody()?.string().toString())
                 }
+
                 loading.postValue(false)
 
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 loading.postValue(false)
                 e.printStackTrace()
                 error.postValue(e.localizedMessage)
@@ -58,13 +78,13 @@ class GetFilmRepository @Inject constructor(
     }
 
     private suspend fun saveFilm(data: List<ResultsFilmItem>) {
-        if (data.isNotEmpty()){
+        if (data.isNotEmpty()) {
             val filmItem: ArrayList<FilmVo> = arrayListOf()
             data.forEach { listItem ->
                 id++
                 filmItem.add(
                     FilmVo(
-                        id = id-30,
+                        id = id - 30,
                         name = listItem.title!!
                     )
                 )
