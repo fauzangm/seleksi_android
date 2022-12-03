@@ -27,18 +27,25 @@ class ListItemFragment : Fragment() {
 
     private var _binding: FragmentListItemBinding? = null
     private val binding get() = _binding!!
+
     @Inject
     lateinit var adapterPeople: ListPeopleAdapter
+
     @Inject
     lateinit var adapterFIlm: ListFilmAdapter
+
     @Inject
     lateinit var adapterPlanet: ListPlanetAdapter
+
     @Inject
     lateinit var adapterSpeices: ListSpeciesAdapter
+
     @Inject
     lateinit var adapterShip: ListShipAdapter
+
     @Inject
     lateinit var adapterVehicle: ListVehicleAdapter
+
     @Inject
     lateinit var dataCache: DataCache
     private val viewmodel: ListItemViewModel by viewModels()
@@ -65,7 +72,7 @@ class ListItemFragment : Fragment() {
 
     private fun initUi() {
         interrupt = dataCache.dataInterrupt?.interrupt.toString()
-        Log.e("interr",interrupt)
+        Log.e("interr", interrupt)
         //adapter People
         binding.rvPeopleItem.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -98,19 +105,17 @@ class ListItemFragment : Fragment() {
         binding.rvPlanetItem.adapter = adapterPlanet
 
         initAction()
-        Handler(Looper.getMainLooper()).postDelayed({
-            initObserve()
-        },1500)
+        initObserve()
 
     }
 
     private fun initObserve() {
         if (interrupt == "1") {
             viewmodel.getPeople()
-            Log.e("interr","masukinterrup")
+            Log.e("interr", "masukinterrup")
             binding.rvPeopleItem.visibility = View.VISIBLE
-            viewmodel.readPeople.observe(viewLifecycleOwner){
-                Log.e("itempeople",it.toString())
+            viewmodel.readPeople.observe(viewLifecycleOwner) {
+                Log.e("itempeople", it.toString())
                 adapterPeople.submitList(it)
             }
 
@@ -119,7 +124,7 @@ class ListItemFragment : Fragment() {
         if (interrupt == "2") {
             viewmodel.getFilm()
             binding.rvFilmItem.visibility = View.VISIBLE
-            viewmodel.readFIlm.observe(viewLifecycleOwner){
+            viewmodel.readFIlm.observe(viewLifecycleOwner) {
                 adapterFIlm.submitList(it)
             }
 
@@ -178,10 +183,55 @@ class ListItemFragment : Fragment() {
             id = event.data.id.toString(),
             interrupt = dataCache.dataInterrupt?.interrupt
         )
-        dataCache.put(DataCache.ID,event.data.id.toString())
-        dataCache.put(DataCache.INTERRUPT,"1")
         view?.findNavController()?.navigate(R.id.action_navigation_list_to_detailFragment)
     }
+
+    @Subscribe
+    fun onItemClickedFIlmEvent(event: ItemDataFilmEvent) {
+        dataCache.dataInterrupt = FormatDataInterrupt(
+            id = event.data.id.toString(),
+            interrupt = dataCache.dataInterrupt?.interrupt
+        )
+        view?.findNavController()?.navigate(R.id.action_navigation_list_to_detailFilmFragment)
+    }
+
+    @Subscribe
+    fun onItemClickedPlanetEvent(event: ItemDataPlanetEvent) {
+        dataCache.dataInterrupt = FormatDataInterrupt(
+            id = event.data.id.toString(),
+            interrupt = dataCache.dataInterrupt?.interrupt
+        )
+        view?.findNavController()?.navigate(R.id.action_navigation_list_to_detailPlanetFragment)
+    }
+
+    @Subscribe
+    fun onItemClickedShipEvent(event: ItemDataShipEvent) {
+        dataCache.dataInterrupt = FormatDataInterrupt(
+            id = event.data.id.toString(),
+            interrupt = dataCache.dataInterrupt?.interrupt
+        )
+        view?.findNavController()?.navigate(R.id.action_navigation_list_to_detailShipFragment)
+    }
+
+    @Subscribe
+    fun onItemClickedSpeciesEvent(event: ItemDataSpeciesEvent) {
+        dataCache.dataInterrupt = FormatDataInterrupt(
+            id = event.data.id.toString(),
+            interrupt = dataCache.dataInterrupt?.interrupt
+        )
+        view?.findNavController()?.navigate(R.id.action_navigation_list_to_detailSpeciesFragment)
+    }
+
+    @Subscribe
+    fun onItemClickedVehicleEvent(event: ItemDataVehicleEvent) {
+        dataCache.dataInterrupt = FormatDataInterrupt(
+            id = event.data.id.toString(),
+            interrupt = dataCache.dataInterrupt?.interrupt
+        )
+        view?.findNavController()?.navigate(R.id.action_navigation_list_to_detailVehicleFragment)
+    }
+
+
 
     override fun onStart() {
         super.onStart()
@@ -192,4 +242,8 @@ class ListItemFragment : Fragment() {
         super.onStop()
         EventBus.getDefault().unregister(this)
     }
+
+
+
+
 }

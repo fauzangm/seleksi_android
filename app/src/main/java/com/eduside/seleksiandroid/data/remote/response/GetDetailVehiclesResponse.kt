@@ -11,13 +11,13 @@ data class GetDetailVehiclesResponse(
 	val cargoCapacity: String? = null,
 
 	@field:SerializedName("films")
-	val films: List<String?>? = null,
+	val films: List<String>? = null,
 
 	@field:SerializedName("passengers")
 	val passengers: String? = null,
 
 	@field:SerializedName("pilots")
-	val pilots: List<String?>? = null,
+	val pilots: List<String>? = null,
 
 	@field:SerializedName("edited")
 	val edited: String? = null,

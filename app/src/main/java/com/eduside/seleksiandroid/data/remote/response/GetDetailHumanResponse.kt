@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class GetDetailHumanResponse(
 
 	@field:SerializedName("films")
-	val films: List<String?>? = null,
+	val films: List<String>? = null,
 
 	@field:SerializedName("skin_colors")
 	val skinColors: String? = null,
@@ -29,7 +29,7 @@ data class GetDetailHumanResponse(
 	val classification: String? = null,
 
 	@field:SerializedName("people")
-	val people: List<String?>? = null,
+	val people: List<String>? = null,
 
 	@field:SerializedName("url")
 	val url: String? = null,

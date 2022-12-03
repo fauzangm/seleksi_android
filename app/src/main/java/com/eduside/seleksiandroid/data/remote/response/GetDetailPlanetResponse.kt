@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class GetDetailPlanetResponse(
 
 	@field:SerializedName("films")
-	val films: List<String?>? = null,
+	val films: List<String>? = null,
 
 	@field:SerializedName("edited")
 	val edited: String? = null,
@@ -41,7 +41,7 @@ data class GetDetailPlanetResponse(
 	val name: String? = null,
 
 	@field:SerializedName("residents")
-	val residents: List<String?>? = null,
+	val residents: List<String>? = null,
 
 	@field:SerializedName("terrain")
 	val terrain: String? = null

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eduside.seleksiandroid.data.local.db.entities.FilmVo
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
 import com.eduside.seleksiandroid.databinding.ItemListPeopleItemBinding
+import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class ListFilmAdapter @Inject constructor() :
@@ -28,9 +29,9 @@ class ListFilmAdapter @Inject constructor() :
 //            .centerCrop()
 //            .placeholder(R.drawable.ic_defaultimage)
 //            .into(holder.binding.imgKambing)
-//        holder.binding.cvContainer.setOnClickListener {
-//            EventBus.getDefault().post(ItemDataKambingEvent(data))
-//        }
+        holder.binding.cvContainer.setOnClickListener {
+            EventBus.getDefault().post(ItemDataFilmEvent(data))
+        }
     }
 
     class ViewHolder(itemBinding: ItemListPeopleItemBinding) :

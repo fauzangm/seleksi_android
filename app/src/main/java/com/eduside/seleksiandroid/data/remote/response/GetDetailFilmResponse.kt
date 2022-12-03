@@ -26,7 +26,7 @@ data class GetDetailFilmResponse(
 	val url: String? = null,
 
 	@field:SerializedName("characters")
-	val characters: List<String?>? = null,
+	val characters: List<String>? = null,
 
 	@field:SerializedName("episode_id")
 	val episodeId: Int? = null,

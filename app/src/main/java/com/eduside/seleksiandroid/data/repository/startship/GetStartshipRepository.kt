@@ -1,5 +1,6 @@
 package com.eduside.seleksiandroid.data.repository.startship
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eduside.bappenda.di.IoDispatcher
@@ -37,8 +38,8 @@ class GetStartshipRepository @Inject constructor(
         return shipDao.getShip(searchQuery)
     }
 
-    suspend fun getItemShip(){
-        withContext(ioDispatcher){
+    suspend fun getItemShip() {
+        withContext(ioDispatcher) {
             val result = shipDao.getShip()
             result.let {
                 shipVoItem.postValue(it)
@@ -46,8 +47,8 @@ class GetStartshipRepository @Inject constructor(
         }
     }
 
-    suspend fun getStartship() : GetStartshipResult {
-        return withContext(ioDispatcher){
+    suspend fun getStartship(): GetStartshipResult {
+        return withContext(ioDispatcher) {
             loading.postValue(true)
             try {
                 val check = shipDao.getShip()
@@ -65,7 +66,7 @@ class GetStartshipRepository @Inject constructor(
                     }
                     loading.postValue(false)
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 loading.postValue(false)
                 e.printStackTrace()
                 error.postValue(e.localizedMessage)
@@ -77,7 +78,7 @@ class GetStartshipRepository @Inject constructor(
 
 
     private val regDetailItem = MutableLiveData<GetDetailShipResponse>()
-    suspend fun getDetaiShipItem(id:Int): GetDetailStartshipResult {
+    suspend fun getDetaiShipItem(id: Int): GetDetailStartshipResult {
         return withContext(ioDispatcher) {
             loading.postValue(true)
             try {
@@ -103,23 +104,48 @@ class GetStartshipRepository @Inject constructor(
 
     }
 
+    //    it.pilots?.forEach { vehicle ->
+//        val lengt = vehicle.length - 2
+//        var dataID = ""
+//        if (vehicle[lengt - 1] != '/') {
+//            val data = vehicle[lengt]
+//            val data2 =vehicle[lengt -1]
+//            dataID = data2.toString() + data.toString()
+//        } else {
+//            val data = vehicle[lengt]
+//            dataID = data.toString()
+//        }
+//        viewModel.getPeople(dataID.toInt())
+//    }
     private suspend fun saveShip(data: List<ResultsStartShipItem>) {
-        if (data.isNotEmpty()){
+        if (data.isNotEmpty()) {
             val startShipItem: ArrayList<ShipVo> = arrayListOf()
             data.forEach { listItem ->
-                id++
+                val url = listItem.url
+                val lengt = url?.length!! - 2
+                var dataID = ""
+                if (url[lengt - 1] != '/') {
+                    val data = url[lengt]
+                    val data2 = url[lengt - 1]
+                    dataID = data2.toString() + data.toString()
+                } else {
+                    val data = url[lengt]
+                    dataID = data.toString()
+                }
+                Log.e("DatIDSHIP",dataID)
                 startShipItem.add(
                     ShipVo(
-                        id = id-90,
+                        id = dataID.toInt(),
                         name = listItem.name!!
                     )
                 )
 
+
+                delay(200L)
+                shipDao.addShip(startShipItem)
             }
-            delay(200L)
-            shipDao.addShip(startShipItem)
+
         }
 
     }
-
 }

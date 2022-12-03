@@ -1,5 +1,6 @@
 package com.eduside.seleksiandroid.data.repository.species
 
+import android.util.Log
 import android.widget.GridLayout.Spec
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -108,10 +109,21 @@ class GetSpeciesRepository @Inject constructor(
         if (data.isNotEmpty()) {
             val speciesItem: ArrayList<SpeciesVo> = arrayListOf()
             data.forEach { listItem ->
-                id++
+                val url = listItem.url
+                val lengt = url?.length!! - 2
+                var dataID = ""
+                if (url[lengt - 1] != '/') {
+                    val data = url[lengt]
+                    val data2 = url[lengt - 1]
+                    dataID = data2.toString() + data.toString()
+                } else {
+                    val data = url[lengt]
+                    dataID = data.toString()
+                }
+                Log.e("DatIDSHIP",dataID)
                 speciesItem.add(
                     SpeciesVo(
-                        id = id - 90,
+                        id = dataID.toInt(),
                         name = listItem.name!!
                     )
                 )

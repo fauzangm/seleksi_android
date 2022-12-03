@@ -1,5 +1,6 @@
 package com.eduside.seleksiandroid.data.repository.vehicle
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.eduside.bappenda.di.IoDispatcher
@@ -109,10 +110,21 @@ class GetVehicleRepository @Inject constructor(
         if (data.isNotEmpty()) {
             val vehiclesItem: ArrayList<VehiclesVo> = arrayListOf()
             data.forEach { listItem ->
-                id++
+                val url = listItem.url
+                val lengt = url?.length!! - 2
+                var dataID = ""
+                if (url[lengt - 1] != '/') {
+                    val data = url[lengt]
+                    val data2 = url[lengt - 1]
+                    dataID = data2.toString() + data.toString()
+                } else {
+                    val data = url[lengt]
+                    dataID = data.toString()
+                }
+                Log.e("DatIDSHIP",dataID)
                 vehiclesItem.add(
                     VehiclesVo(
-                        id = id - 90,
+                        id = dataID.toInt(),
                         name = listItem.name!!
                     )
                 )

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
 import com.eduside.seleksiandroid.data.local.db.entities.SpeciesVo
 import com.eduside.seleksiandroid.databinding.ItemListPeopleItemBinding
+import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class ListSpeciesAdapter @Inject constructor() :
@@ -22,15 +23,10 @@ class ListSpeciesAdapter @Inject constructor() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = getItem(position)
         holder.binding.tvNama.text = data.name
-//        Glide
-//            .with(holder.itemView.context)
-//            .load(data.image)
-//            .centerCrop()
-//            .placeholder(R.drawable.ic_defaultimage)
-//            .into(holder.binding.imgKambing)
-//        holder.binding.cvContainer.setOnClickListener {
-//            EventBus.getDefault().post(ItemDataKambingEvent(data))
-//        }
+
+        holder.binding.cvContainer.setOnClickListener {
+            EventBus.getDefault().post(ItemDataSpeciesEvent(data))
+        }
     }
 
     class ViewHolder(itemBinding: ItemListPeopleItemBinding) :

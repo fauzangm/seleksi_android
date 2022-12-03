@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <com.airbnb.lottie.LottieAnimationView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/bghome"
+        app:lottie_colorFilter="@color/colorPrimary"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clHeder"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:background="@drawable/bg_primary_bottom_big_rounded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgback"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/ic_arrwoback"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+            <TextView
+                android:background="@android:color/transparent"
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsbold"
+                tools:text="Name"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clHeder">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llcBodyContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="@dimen/small_padding">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/lldetailContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+
+                <TextView
+                    android:id="@+id/tvRiwayat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6.5"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/tvNpwpd"-->
+                <!--                        android:layout_width="0dp"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_weight="6"-->
+                <!--                        android:ellipsize="end"-->
+                <!--                        android:maxLines="1"-->
+                <!--                        android:text="@{npwpd.npwpd}"-->
+                <!--                        android:textAlignment="viewEnd"-->
+                <!--                        android:textColor="@color/colorBlack"-->
+                <!--                        android:textSize="@dimen/small_text"-->
+                <!--                        android:textStyle="bold"-->
+                <!--                        tools:text="1231241.12431.124" />-->
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llcNpwpdContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Model"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etModel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Max Speed"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etmaxspeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text"
+                    android:textStyle="italic"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Passengers"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etpassengers"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text"
+                    android:textStyle="italic"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Cargo Capacity"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etCapacity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text"
+                    android:textStyle="italic"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Consumables"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etConsumables"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text"
+                    android:textStyle="italic"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llcNamaUsahaContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Cost In Credits"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etCostCredit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text"
+                    android:textStyle="italic"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llcAlamatContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Crew"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etCrew"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llcTanggalLahir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Manufacturer"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etManufacturer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llcJenisKelamin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+
+                <TextView
+                    android:text="Lenght"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etLenght"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="5"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llcWarna"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+
+                <TextView
+                    android:text="Pilots"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etPilots"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="4"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llcSaudara"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+
+                <TextView
+                    android:text="Film"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text" />
+
+                <TextView
+                    android:text="@string/tanda"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5" />
+
+                <TextView
+                    android:id="@+id/etFIlms"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:maxLines="6"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/small_text"
+                    android:text="" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_home"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_btn_primary_rounded"
+                android:layout_margin="20dp"
+                android:text="HOME"
+                android:textColor="@color/colorWhite"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:height="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

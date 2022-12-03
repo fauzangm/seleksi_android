@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.eduside.seleksiandroid.data.local.db.entities.PlanetVo
 import com.eduside.seleksiandroid.databinding.ItemListPlanetItemBinding
+import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class ListPlanetAdapter @Inject constructor() :
@@ -21,6 +22,9 @@ class ListPlanetAdapter @Inject constructor() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = getItem(position)
         holder.binding.tvNama.text = data.name
+        holder.binding.cvContainer.setOnClickListener {
+            EventBus.getDefault().post(ItemDataPlanetEvent(data))
+        }
     }
 
     class ViewHolder(itemBinding: ItemListPlanetItemBinding) :
