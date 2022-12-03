@@ -24,6 +24,7 @@ class ListItemViewModel @Inject constructor(
 ) : ViewModel() {
 
 
+
    val readPeople = peopleRepository.itemPeople
     fun getPeople() {
         viewModelScope.launch {

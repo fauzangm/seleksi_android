@@ -7,12 +7,15 @@ import androidx.lifecycle.map
 import androidx.lifecycle.observe
 import com.eduside.bappenda.di.IoDispatcher
 import com.eduside.seleksiandroid.data.local.db.dao.PeopleDao
+import com.eduside.seleksiandroid.data.local.db.entities.FilmVo
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
 import com.eduside.seleksiandroid.data.remote.ApiServices
+import com.eduside.seleksiandroid.data.remote.response.GetDetailPeopleResponse
 import com.eduside.seleksiandroid.data.remote.response.people.GetPeopleResponse
 import com.eduside.seleksiandroid.data.remote.response.people.ResultsPeopleItem
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -37,6 +40,10 @@ class GetPeopleRepository @Inject constructor(
         }
     }
 
+    //search id
+    fun getPeople(searchQuery: String): Flow<List<PeopleVo>> {
+        return peopleDao.getPeople(searchQuery)
+    }
     suspend fun getPeopleItem(): GetPeopleResult {
         return withContext(ioDispatcher) {
             loading.postValue(true)
@@ -63,6 +70,33 @@ class GetPeopleRepository @Inject constructor(
                 error.postValue(e.localizedMessage)
             }
             return@withContext GetPeopleResult(error, loading, regItem)
+        }
+
+    }
+
+
+    private val regDetailItem = MutableLiveData<GetDetailPeopleResponse>()
+    suspend fun getPeopleDetailItem(id: Int): GetDetailPeopleResult {
+        return withContext(ioDispatcher) {
+            loading.postValue(true)
+            try {
+                val getResponse = apiServices.getDetailPeople(id)
+                if (getResponse.isSuccessful) {
+                    getResponse.body()?.let {
+                        regDetailItem.postValue(it)
+                    }
+                } else {
+                    error.postValue(getResponse.errorBody()?.string().toString())
+                }
+
+                loading.postValue(false)
+
+            } catch (e: Exception) {
+                loading.postValue(false)
+                e.printStackTrace()
+                error.postValue(e.localizedMessage)
+            }
+            return@withContext GetDetailPeopleResult(error, loading, regDetailItem)
         }
 
     }

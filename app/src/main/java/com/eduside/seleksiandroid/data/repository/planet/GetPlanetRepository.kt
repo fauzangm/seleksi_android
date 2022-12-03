@@ -10,13 +10,13 @@ import com.eduside.seleksiandroid.data.local.db.entities.FilmVo
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
 import com.eduside.seleksiandroid.data.local.db.entities.PlanetVo
 import com.eduside.seleksiandroid.data.remote.ApiServices
-import com.eduside.seleksiandroid.data.remote.response.GetPlanetsResponse
-import com.eduside.seleksiandroid.data.remote.response.ResultsFilmItem
-import com.eduside.seleksiandroid.data.remote.response.ResultsPlanetItem
+import com.eduside.seleksiandroid.data.remote.response.*
 import com.eduside.seleksiandroid.data.remote.response.people.GetPeopleResponse
 import com.eduside.seleksiandroid.data.remote.response.people.ResultsPeopleItem
+import com.eduside.seleksiandroid.data.repository.species.GetDetailSpeciesResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -31,6 +31,11 @@ class GetPlanetRepository @Inject constructor(
     private val regItem = MutableLiveData<GetPlanetsResponse>()
     val planetVoItem = MutableLiveData<List<PlanetVo>>()
     private var id = 0
+
+    //search id
+    fun getPlanet(searchQuery: String): Flow<List<PlanetVo>> {
+        return planetDao.getPlanet(searchQuery)
+    }
 
     suspend fun getItemPlanet() {
         withContext(ioDispatcher) {
@@ -67,6 +72,34 @@ class GetPlanetRepository @Inject constructor(
                 error.postValue(e.localizedMessage)
             }
             return@withContext GetPlanetResult(error, loading, regItem)
+        }
+
+    }
+
+
+    private val regDetailItem = MutableLiveData<GetDetailPlanetResponse>()
+    suspend fun getDetailPlanetItem(id:Int): GetDetailPlanetResult {
+        return withContext(ioDispatcher) {
+            loading.postValue(true)
+            try {
+                val getResponse = apiServices.getDetailPlanet(id)
+                if (getResponse.isSuccessful) {
+                    getResponse.body()?.let {
+                        regDetailItem.postValue(it)
+                    }
+                } else {
+                    error.postValue(getResponse.errorBody()?.string().toString())
+                }
+
+
+                loading.postValue(false)
+
+            } catch (e: Exception) {
+                loading.postValue(false)
+                e.printStackTrace()
+                error.postValue(e.localizedMessage)
+            }
+            return@withContext GetDetailPlanetResult(error, loading, regDetailItem)
         }
 
     }

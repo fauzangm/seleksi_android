@@ -16,7 +16,7 @@ import com.eduside.seleksiandroid.data.local.db.entities.*
         ShipVo::class,
         VehiclesVo::class
     ],
-    version = 6,
+    version = 1,
     exportSchema = false
 )
 

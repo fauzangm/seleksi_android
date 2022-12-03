@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.eduside.seleksiandroid.data.local.db.entities.FilmVo
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
+import com.eduside.seleksiandroid.data.local.db.entities.PlanetVo
 import com.eduside.seleksiandroid.data.local.db.entities.ShipVo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ShipDao {
@@ -23,5 +25,9 @@ interface ShipDao {
     //get
     @Query("SELECT * FROM list_ship ORDER BY id ASC")
     suspend fun getShip(): List<ShipVo>
+
+    //getFromID
+    @Query("SELECT * FROM list_ship WHERE id LIKE :searchQuery")
+    fun getShip(searchQuery: String): Flow<List<ShipVo>>
 
 }

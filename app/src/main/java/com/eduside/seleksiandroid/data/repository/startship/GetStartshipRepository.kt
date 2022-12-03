@@ -13,8 +13,10 @@ import com.eduside.seleksiandroid.data.remote.ApiServices
 import com.eduside.seleksiandroid.data.remote.response.*
 import com.eduside.seleksiandroid.data.remote.response.people.GetPeopleResponse
 import com.eduside.seleksiandroid.data.remote.response.people.ResultsPeopleItem
+import com.eduside.seleksiandroid.data.repository.vehicle.GetDetailVehicleResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -29,6 +31,11 @@ class GetStartshipRepository @Inject constructor(
     private val regItem = MutableLiveData<GetStartshipsResponse>()
     val shipVoItem = MutableLiveData<List<ShipVo>>()
     private var id = 0
+
+    //search id
+    fun getShip(searchQuery: String): Flow<List<ShipVo>> {
+        return shipDao.getShip(searchQuery)
+    }
 
     suspend fun getItemShip(){
         withContext(ioDispatcher){
@@ -64,6 +71,34 @@ class GetStartshipRepository @Inject constructor(
                 error.postValue(e.localizedMessage)
             }
             return@withContext GetStartshipResult(error, loading, regItem)
+        }
+
+    }
+
+
+    private val regDetailItem = MutableLiveData<GetDetailShipResponse>()
+    suspend fun getDetaiShipItem(id:Int): GetDetailStartshipResult {
+        return withContext(ioDispatcher) {
+            loading.postValue(true)
+            try {
+                val getResponse = apiServices.getDetailShip(id)
+                if (getResponse.isSuccessful) {
+                    getResponse.body()?.let {
+                        regDetailItem.postValue(it)
+                    }
+                } else {
+                    error.postValue(getResponse.errorBody()?.string().toString())
+                }
+
+
+                loading.postValue(false)
+
+            } catch (e: Exception) {
+                loading.postValue(false)
+                e.printStackTrace()
+                error.postValue(e.localizedMessage)
+            }
+            return@withContext GetDetailStartshipResult(error, loading, regDetailItem)
         }
 
     }

@@ -6,4 +6,11 @@
     <string name="home_species">Species</string>
     <string name="home_vehicles">Vehicles</string>
     <string name="tanda">:</string>
+    <string name="detail_people_height">Height</string>
+    <string name="detail_people_mass">Mass</string>
+    <string name="detail_people_hair_color">Hair Color</string>
+    <string name="detail_people_skin_color">Skin Color</string>
+    <string name="detail_people_gender">Gender</string>
+    <string name="detail_people_species">Species</string>
+    <string name="detail_people_starships">Starships</string>
 </resources>

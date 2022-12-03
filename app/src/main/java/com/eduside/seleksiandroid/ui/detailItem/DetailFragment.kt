@@ -1,6 +1,5 @@
 package com.eduside.seleksiandroid.ui.detailItem
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.eduside.seleksiandroid.R
 import com.eduside.seleksiandroid.data.local.sp.DataCache
 import com.eduside.seleksiandroid.databinding.FragmentDetailBinding
 import com.eduside.seleksiandroid.databinding.FragmentHomeBinding
+import com.eduside.seleksiandroid.ui.DialogGagalGet
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,10 +23,14 @@ class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-    private var id =""
-    @Inject lateinit var dataCache: DataCache
-//    private val viewModel : FormPendataanViewModel by viewModels ()
-//    @Inject lateinit var adapter: FormPendataanDetailPajakAdapter
+    private var filmData = arrayListOf<String>()
+    private var speciesData = arrayListOf<String>()
+    private var vehicleData = arrayListOf<String>()
+    private var id = ""
+    private var interrupt = ""
+    @Inject
+    lateinit var dataCache: DataCache
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,9 +52,175 @@ class DetailFragment : Fragment() {
 
     private fun initUi() {
 
-        id = dataCache.getString(DataCache.ID).toString()
-        binding.tvTitle.text = id
+        interrupt = dataCache.dataInterrupt?.interrupt.toString()
+        id = dataCache.dataInterrupt?.id.toString()
+        viewModel.getPeople(id.toInt())
         initAction()
+        initObserve()
+    }
+
+    private fun initObserve() {
+        viewModel.getVehicleError.observe(viewLifecycleOwner) {
+            val bottomSheetFragment = DialogGagalGet()
+            activity?.supportFragmentManager?.let { it1 ->
+                bottomSheetFragment.show(
+                    it1,
+                    "DialogGagal"
+                )
+            }
+
+        }
+        viewModel.getVehicleLoading.observe(viewLifecycleOwner) {
+        }
+        viewModel.getVehicleResponse.observe(viewLifecycleOwner) {
+            binding.etVehicles.text = "${binding.etVehicles.text}${it.name},"
+
+        }
+
+        //spesies
+        viewModel.getSpeciesError.observe(viewLifecycleOwner) {
+            val bottomSheetFragment = DialogGagalGet()
+            activity?.supportFragmentManager?.let { it1 ->
+                bottomSheetFragment.show(
+                    it1,
+                    "DialogGagal"
+                )
+            }
+
+        }
+        viewModel.getSpeciesLoading.observe(viewLifecycleOwner) {
+        }
+        viewModel.getSpeciesResponse.observe(viewLifecycleOwner) {
+            binding.etSpecies.text = "${binding.etSpecies.text}${it.name},"
+
+        }
+
+        //ship
+        viewModel.getShipError.observe(viewLifecycleOwner) {
+            val bottomSheetFragment = DialogGagalGet()
+            activity?.supportFragmentManager?.let { it1 ->
+                bottomSheetFragment.show(
+                    it1,
+                    "DialogGagal"
+                )
+            }
+
+        }
+        viewModel.getShipLoading.observe(viewLifecycleOwner) {
+        }
+        viewModel.getShipResponse.observe(viewLifecycleOwner) {
+            binding.etStartShip.text = "${binding.etStartShip.text}${it.name},"
+
+        }
+
+        //planet
+        viewModel.getPlanetError.observe(viewLifecycleOwner) {
+            val bottomSheetFragment = DialogGagalGet()
+            activity?.supportFragmentManager?.let { it1 ->
+                bottomSheetFragment.show(
+                    it1,
+                    "DialogGagal"
+                )
+            }
+
+        }
+        viewModel.getPlanetLoading.observe(viewLifecycleOwner) {
+        }
+        viewModel.getPlanetResponse.observe(viewLifecycleOwner) {
+            binding.etPlanet.text = "${binding.etPlanet.text}${it.name},"
+
+        }
+
+        //people
+        viewModel.getPeopleError.observe(viewLifecycleOwner) {
+            val bottomSheetFragment = DialogGagalGet()
+            activity?.supportFragmentManager?.let { it1 ->
+                bottomSheetFragment.show(
+                    it1,
+                    "DialogGagal"
+                )
+            }
+
+        }
+        viewModel.getPeopleLoading.observe(viewLifecycleOwner) {
+        }
+        viewModel.getPeopleResponse.observe(viewLifecycleOwner) {
+            binding.tvTitle.text = it.name.toString()
+            binding.etHeight.text = it.height.toString()
+            binding.etMass.text = it.mass.toString()
+            binding.etTanggallahir.text = it.birthYear.toString()
+            binding.etHairColor.text = it.hairColor.toString()
+            binding.etSkinColor.text = it.skinColor.toString()
+            binding.etGender.text = it.gender.toString()
+            it.films?.forEach { film ->
+                val lengt = film.length - 2
+                Log.e("lengt", lengt.toString())
+                val data = film[lengt] - 1
+                Log.e("chardata", data.toString())
+                viewModel.getFIlm(data.toString()).observe(viewLifecycleOwner) { list ->
+                    list.forEach { dataFIlm ->
+                        filmData.add(dataFIlm.name)
+                    }
+                    binding.etFilm.text = filmData.toString()
+                }
+            }
+
+            it.vehicles?.forEach { vehicle ->
+                val lengt = vehicle.length - 2
+                var dataID = ""
+                if (vehicle[lengt - 1] != '/') {
+                    val data = vehicle[lengt]
+                    val data2 =vehicle[lengt -1]
+                    dataID = data2.toString() + data.toString()
+                } else {
+                    val data = vehicle[lengt]
+                    dataID = data.toString()
+                }
+                viewModel.getVehicle(dataID.toInt())
+            }
+
+            it.species?.forEach { vehicle ->
+                val lengt = vehicle.length - 2
+                var dataID = ""
+                if (vehicle[lengt - 1] != '/') {
+                    val data = vehicle[lengt]
+                    val data2 =vehicle[lengt -1]
+                    dataID = data2.toString() + data.toString()
+                } else {
+                    val data = vehicle[lengt]
+                    dataID = data.toString()
+                }
+                viewModel.getSpecies(dataID.toInt())
+            }
+
+            it.starships?.forEach { vehicle ->
+                val lengt = vehicle.length - 2
+                var dataID = ""
+                if (vehicle[lengt - 1] != '/') {
+                    val data = vehicle[lengt]
+                    val data2 =vehicle[lengt -1]
+                    dataID = data2.toString() + data.toString()
+                } else {
+                    val data = vehicle[lengt]
+                    dataID = data.toString()
+                }
+                viewModel.getShip(dataID.toInt())
+            }
+
+            val lengt = it.homeworld?.length
+            var dataID = it.homeworld!![lengt!! -2].toString()
+            if (it.homeworld[lengt -3].toString() != "/"){
+                val data = it.homeworld[lengt -2].toString()
+                val data2 = it.homeworld[lengt -3].toString()
+                dataID = data2.toString() + data.toString()
+            }
+            Log.e("dataworld",dataID)
+            viewModel.getPlanet(dataID.toInt())
+
+
+
+        }
+
     }
 
     private fun initAction() {

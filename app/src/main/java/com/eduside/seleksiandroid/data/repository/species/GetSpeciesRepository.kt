@@ -13,8 +13,10 @@ import com.eduside.seleksiandroid.data.remote.ApiServices
 import com.eduside.seleksiandroid.data.remote.response.*
 import com.eduside.seleksiandroid.data.remote.response.people.GetPeopleResponse
 import com.eduside.seleksiandroid.data.remote.response.people.ResultsPeopleItem
+import com.eduside.seleksiandroid.data.repository.vehicle.GetDetailVehicleResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -30,6 +32,10 @@ class GetSpeciesRepository @Inject constructor(
     val speciesVoItem = MutableLiveData<List<SpeciesVo>>()
     private var id = 0
 
+    //search id
+    fun getSpecies(searchQuery: String): Flow<List<SpeciesVo>> {
+        return speciesDao.getSpecies(searchQuery)
+    }
 
     suspend fun getItemSpecies() {
         withContext(ioDispatcher) {
@@ -68,6 +74,35 @@ class GetSpeciesRepository @Inject constructor(
         }
 
     }
+
+
+    private val regDetailItem = MutableLiveData<GetDetailHumanResponse>()
+    suspend fun getDetailHumanItem(id:Int): GetDetailSpeciesResult {
+        return withContext(ioDispatcher) {
+            loading.postValue(true)
+            try {
+                val getResponse = apiServices.getDetailSpecies(id)
+                if (getResponse.isSuccessful) {
+                    getResponse.body()?.let {
+                        regDetailItem.postValue(it)
+                    }
+                } else {
+                    error.postValue(getResponse.errorBody()?.string().toString())
+                }
+
+
+                loading.postValue(false)
+
+            } catch (e: Exception) {
+                loading.postValue(false)
+                e.printStackTrace()
+                error.postValue(e.localizedMessage)
+            }
+            return@withContext GetDetailSpeciesResult(error, loading, regDetailItem)
+        }
+
+    }
+
 
     private suspend fun saveSpecies(data: List<ResultsSpeciesItem>) {
         if (data.isNotEmpty()) {

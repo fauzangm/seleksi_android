@@ -22,7 +22,7 @@ object AppModules {
     private const val CONNECT_TIMEOUT: Long = 30
     private const val READ_TIMEOUT: Long = 30
     private const val WRITE_TIMEOUT: Long = 30
-    private const val BASE_URL = "https://swapi.dev/api/"
+    private const val BASE_URL = "https://swapi.py4e.com/api/"
 
     @Provides
     @Singleton

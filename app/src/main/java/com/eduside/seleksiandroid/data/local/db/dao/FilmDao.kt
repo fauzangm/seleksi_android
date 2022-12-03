@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.eduside.seleksiandroid.data.local.db.entities.FilmVo
 import com.eduside.seleksiandroid.data.local.db.entities.PeopleVo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FilmDao {
@@ -27,5 +28,9 @@ interface FilmDao {
     //get
     @Query("SELECT * FROM list_film ORDER BY id ASC")
     suspend fun getFIlm(): List<FilmVo>
+
+    //getFromID
+    @Query("SELECT * FROM list_film WHERE id LIKE :searchQuery")
+    fun getFIlm(searchQuery: String): Flow<List<FilmVo>>
 
 }

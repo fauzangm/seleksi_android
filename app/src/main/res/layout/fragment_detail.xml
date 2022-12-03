@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppinsbold"
-                android:text="Name"
+                tools:text="Name"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +121,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
-                    android:text="No RFID"
+                    android:text="@string/detail_people_height"
                     android:fontFamily="@font/poppinsmedium"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/small_text" />
@@ -135,14 +135,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvRfid"
+                    android:id="@+id/etHeight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:maxLines="1"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="CA 1806" />
+                    android:textSize="@dimen/small_text" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -155,7 +154,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
-                    android:text="Ras"
+                    android:text="@string/detail_people_mass"
                     android:fontFamily="@font/poppinsmedium"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/small_text" />
@@ -169,15 +168,14 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvRas"
+                    android:id="@+id/etMass"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:maxLines="1"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/small_text"
-                    android:textStyle="italic"
-                    android:text="Capra aegagrus" />
+                    android:textStyle="italic"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -191,7 +189,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
-                    android:text="RFID Induk Jantan"
+                    android:text="@string/detail_people_hair_color"
                     android:fontFamily="@font/poppinsmedium"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/small_text" />
@@ -205,14 +203,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvRfidJantan"
+                    android:id="@+id/etHairColor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:maxLines="1"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="CA 0908" />
+                    android:textSize="@dimen/small_text"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -226,6 +223,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
+                    android:text="@string/detail_people_skin_color"
                     android:fontFamily="@font/poppinsmedium"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/small_text" />
@@ -239,14 +237,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvRfidBetina"
+                    android:id="@+id/etSkinColor"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:maxLines="1"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="CA 2110" />
+                    android:textSize="@dimen/small_text" />
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llcTanggalLahir"
@@ -259,6 +256,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
+                    android:text="Birth Year"
                     android:fontFamily="@font/poppinsmedium"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/small_text" />
@@ -272,14 +270,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvTanggallahir"
+                    android:id="@+id/etTanggallahir"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:maxLines="1"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="18 Juni 2021" />
+                    android:textSize="@dimen/small_text"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -292,6 +289,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:text="@string/detail_people_gender"
                     android:layout_weight="3.5"
                     android:fontFamily="@font/poppinsmedium"
                     android:textColor="@color/colorBlack"
@@ -306,14 +304,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvBobotLahir"
+                    android:id="@+id/etGender"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:maxLines="1"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="1,52 kg" />
+                    android:textSize="@dimen/small_text" />
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llcJenisKelamin"
@@ -323,6 +320,7 @@
 
 
                 <TextView
+                    android:text="Home World"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
@@ -339,14 +337,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvJenisKelamin"
+                    android:id="@+id/etPlanet"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="Jantan" />
+                    android:textSize="@dimen/small_text" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -357,6 +354,7 @@
 
 
                 <TextView
+                    android:text="Film"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
@@ -373,14 +371,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvLokasi"
+                    android:id="@+id/etFilm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
-                    android:maxLines="1"
+                    android:maxLines="6"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="Desa Dawuhan, Kec.Poncokusumo" />
+                    android:textSize="@dimen/small_text" />
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/llcWarna"
@@ -390,6 +387,7 @@
 
 
                 <TextView
+                    android:text="@string/detail_people_species"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
@@ -406,14 +404,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvWarna"
+                    android:id="@+id/etSpecies"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="Putih Hitam Coklat" />
+                    android:textSize="@dimen/small_text" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -424,6 +421,7 @@
 
 
                 <TextView
+                    android:text="Vehicles"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
@@ -440,11 +438,11 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvSaudara"
+                    android:id="@+id/etVehicles"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
-                    android:maxLines="1"
+                    android:maxLines="6"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/small_text"
                     android:text="" />
@@ -458,6 +456,7 @@
 
 
                 <TextView
+                    android:text="@string/detail_people_starships"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.5"
@@ -474,14 +473,13 @@
                     android:layout_weight=".5" />
 
                 <TextView
-                    android:id="@+id/tvBobotSekarang"
+                    android:id="@+id/etStartShip"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
-                    android:maxLines="1"
+                    android:maxLines="5"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/small_text"
-                    android:text="33,57 kg" />
+                    android:textSize="@dimen/small_text" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -489,7 +487,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_btn_primary_rounded"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:text="HOME"
                 android:textColor="@color/colorWhite"/>
 

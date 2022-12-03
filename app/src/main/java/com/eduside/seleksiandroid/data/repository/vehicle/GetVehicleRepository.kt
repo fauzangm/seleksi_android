@@ -10,14 +10,13 @@ import com.eduside.seleksiandroid.data.local.db.entities.PlanetVo
 import com.eduside.seleksiandroid.data.local.db.entities.ShipVo
 import com.eduside.seleksiandroid.data.local.db.entities.VehiclesVo
 import com.eduside.seleksiandroid.data.remote.ApiServices
-import com.eduside.seleksiandroid.data.remote.response.GetPlanetsResponse
-import com.eduside.seleksiandroid.data.remote.response.GetVehiclesResponse
-import com.eduside.seleksiandroid.data.remote.response.ResultsStartShipItem
-import com.eduside.seleksiandroid.data.remote.response.ResultsVehiclesItem
+import com.eduside.seleksiandroid.data.remote.response.*
 import com.eduside.seleksiandroid.data.remote.response.people.GetPeopleResponse
 import com.eduside.seleksiandroid.data.remote.response.people.ResultsPeopleItem
+import com.eduside.seleksiandroid.data.repository.film.GetDetailFilmResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -32,6 +31,11 @@ class GetVehicleRepository @Inject constructor(
     private val regItem = MutableLiveData<GetVehiclesResponse>()
     val vehicleItemVo = MutableLiveData<List<VehiclesVo>>()
     private var id = 0
+
+    //search id
+    fun getVehicle(searchQuery: String): Flow<List<VehiclesVo>> {
+        return vehiclesDao.getVehicle(searchQuery)
+    }
 
     suspend fun getItemVehicle() {
         withContext(ioDispatcher) {
@@ -70,6 +74,33 @@ class GetVehicleRepository @Inject constructor(
                 error.postValue(e.localizedMessage)
             }
             return@withContext GetVehicleResult(error, loading, regItem)
+        }
+
+    }
+
+    private val regDetailItem = MutableLiveData<GetDetailVehiclesResponse>()
+    suspend fun getDetailVehicleItem(id:Int): GetDetailVehicleResult {
+        return withContext(ioDispatcher) {
+            loading.postValue(true)
+            try {
+                val getResponse = apiServices.getDetailVehicle(id)
+                if (getResponse.isSuccessful) {
+                    getResponse.body()?.let {
+                        regDetailItem.postValue(it)
+                    }
+                } else {
+                    error.postValue(getResponse.errorBody()?.string().toString())
+                }
+
+
+                loading.postValue(false)
+
+            } catch (e: Exception) {
+                loading.postValue(false)
+                e.printStackTrace()
+                error.postValue(e.localizedMessage)
+            }
+            return@withContext GetDetailVehicleResult(error, loading, regDetailItem)
         }
 
     }

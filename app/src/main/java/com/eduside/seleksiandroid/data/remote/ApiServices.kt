@@ -35,6 +35,31 @@ interface ApiServices {
     @GET("people/{id}")
     suspend fun getDetailPeople(
         @Path("id")id:Int
-    ):Response<GetPeopleResponse>
+    ):Response<GetDetailPeopleResponse>
+
+    @GET("films/{id}")
+    suspend fun getDetailFilm(
+        @Path("id")id:Int
+    ):Response<GetDetailFilmResponse>
+
+    @GET("vehicles/{id}")
+    suspend fun getDetailVehicle(
+        @Path("id")id:Int
+    ):Response<GetDetailVehiclesResponse>
+
+    @GET("species/{id}")
+    suspend fun getDetailSpecies(
+        @Path("id")id:Int
+    ):Response<GetDetailHumanResponse>
+
+    @GET("starships/{id}")
+    suspend fun getDetailShip(
+        @Path("id")id:Int
+    ):Response<GetDetailShipResponse>
+
+    @GET("planets/{id}")
+    suspend fun getDetailPlanet(
+        @Path("id")id:Int
+    ):Response<GetDetailPlanetResponse>
 
 }

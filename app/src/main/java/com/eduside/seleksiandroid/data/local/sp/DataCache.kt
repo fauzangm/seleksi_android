@@ -10,11 +10,10 @@ class DataCache @Inject constructor(
     @ApplicationContext val _context: Context
 ) {
     companion object {
-        private const val PREF_NAME = "dataSmarGoat"
-        private const val DATA_CACHE = "dataSmartGoat"
-        private const val DATA_CACHESWITCH = "dataSwitchSmartGoat"
-        val INTERRUPT = ""
-        val ID = ""
+        private const val PREF_NAME = "dataSeleksi"
+        private const val DATA_CACHE = "dataSeleksi"
+        val INTERRUPT = "INTERRUPT"
+        val ID = "ID"
     }
 
     private var pref: SharedPreferences
@@ -61,4 +60,11 @@ class DataCache @Inject constructor(
         editor.clear()
         editor.apply()
     }
+
+    var dataInterrupt: FormatDataInterrupt?
+        set(value) = pref.edit().putString(DATA_CACHE, Gson().toJson(value)).apply()
+        get() {
+            val data: String? = pref.getString(DATA_CACHE, null)
+            return if(data.isNullOrBlank()){ null } else { Gson().fromJson(data, FormatDataInterrupt::class.java) }
+        }
 }

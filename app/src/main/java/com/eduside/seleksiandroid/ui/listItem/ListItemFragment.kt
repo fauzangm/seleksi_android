@@ -2,6 +2,8 @@ package com.eduside.seleksiandroid.ui.listItem
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eduside.seleksiandroid.R
 import com.eduside.seleksiandroid.data.local.sp.DataCache
+import com.eduside.seleksiandroid.data.local.sp.FormatDataInterrupt
 import com.eduside.seleksiandroid.databinding.FragmentListItemBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -61,7 +64,7 @@ class ListItemFragment : Fragment() {
     }
 
     private fun initUi() {
-        interrupt = dataCache.getString(DataCache.INTERRUPT).toString()
+        interrupt = dataCache.dataInterrupt?.interrupt.toString()
         Log.e("interr",interrupt)
         //adapter People
         binding.rvPeopleItem.layoutManager =
@@ -95,7 +98,10 @@ class ListItemFragment : Fragment() {
         binding.rvPlanetItem.adapter = adapterPlanet
 
         initAction()
-        initObserve()
+        Handler(Looper.getMainLooper()).postDelayed({
+            initObserve()
+        },1500)
+
     }
 
     private fun initObserve() {
@@ -168,7 +174,12 @@ class ListItemFragment : Fragment() {
 
     @Subscribe
     fun onItemClickedEvent(event: ItemDataPeopleEvent) {
+        dataCache.dataInterrupt = FormatDataInterrupt(
+            id = event.data.id.toString(),
+            interrupt = dataCache.dataInterrupt?.interrupt
+        )
         dataCache.put(DataCache.ID,event.data.id.toString())
+        dataCache.put(DataCache.INTERRUPT,"1")
         view?.findNavController()?.navigate(R.id.action_navigation_list_to_detailFragment)
     }
 

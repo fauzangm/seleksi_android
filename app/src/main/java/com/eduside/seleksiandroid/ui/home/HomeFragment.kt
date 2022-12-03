@@ -12,12 +12,17 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.eduside.seleksiandroid.R
 import com.eduside.seleksiandroid.data.local.sp.DataCache
+import com.eduside.seleksiandroid.data.local.sp.FormatDataInterrupt
 import com.eduside.seleksiandroid.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+
+    companion object{
+        val INTERRUPT = "INTERRUPT"
+    }
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -53,28 +58,47 @@ class HomeFragment : Fragment() {
 //        binding.ivBack.setOnClickListener {
 //            view?.findNavController()?.navigate(R.id.action_navigation_pendataan_detail_objek_to_navigation_pendataan_objek_pajak)
 //        }
+
         binding.btnPeople.setOnClickListener {
-            dataCache.put(DataCache.INTERRUPT,"1")
+            dataCache.dataInterrupt = FormatDataInterrupt(
+                id = dataCache.dataInterrupt?.id,
+                interrupt = "1"
+            )
             view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
         }
         binding.btnFilm.setOnClickListener {
-            dataCache.put(DataCache.INTERRUPT,"2")
+            dataCache.dataInterrupt = FormatDataInterrupt(
+                id = dataCache.dataInterrupt?.id,
+                interrupt = "2"
+            )
             view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
         }
         binding.btnPlanet.setOnClickListener {
-            dataCache.put(DataCache.INTERRUPT,"3")
+            dataCache.dataInterrupt = FormatDataInterrupt(
+                id = dataCache.dataInterrupt?.id,
+                interrupt = "3"
+            )
             view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
         }
         binding.btnSpecies.setOnClickListener {
-            dataCache.put(DataCache.INTERRUPT,"4")
+            dataCache.dataInterrupt = FormatDataInterrupt(
+                id = dataCache.dataInterrupt?.id,
+                interrupt = "4"
+            )
             view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
         }
         binding.btnVehicle.setOnClickListener {
-            dataCache.put(DataCache.INTERRUPT,"5")
+            dataCache.dataInterrupt = FormatDataInterrupt(
+                id = dataCache.dataInterrupt?.id,
+                interrupt = "5"
+            )
             view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
         }
         binding.btnShip.setOnClickListener {
-            dataCache.put(DataCache.INTERRUPT,"6")
+            dataCache.dataInterrupt = FormatDataInterrupt(
+                id = dataCache.dataInterrupt?.id,
+                interrupt = "6"
+            )
             view?.findNavController()?.navigate(R.id.action_navigation_home_to_navigation_list)
         }
 
